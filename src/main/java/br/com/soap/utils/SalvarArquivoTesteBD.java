@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Stateless
-public class SalvarArquivoLogBD {
+public class SalvarArquivoTesteBD {
 
     @Inject
     private LogDao logDao;

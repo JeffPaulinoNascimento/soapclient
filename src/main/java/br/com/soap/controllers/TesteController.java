@@ -7,9 +7,9 @@ import br.com.caelum.vraptor.view.Results;
 import br.com.soap.dto.TesteDTO;
 import br.com.soap.modelos.TesteObject;
 import br.com.soap.dao.LogDao;
-import br.com.soap.utils.ArquivoLog;
-import br.com.soap.VO.TabelaLogVO;
-import br.com.soap.utils.SalvarArquivoLogBD;
+import br.com.soap.utils.ArquivoTeste;
+import br.com.soap.VO.TabelaTesteVO;
+import br.com.soap.utils.SalvarArquivoTesteBD;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.inject.Inject;
@@ -30,13 +30,13 @@ public class TesteController {
     private HttpServletRequest request;
 
     @Inject
-    private ArquivoLog arquivoLog;
+    private ArquivoTeste arquivoTeste;
 
     @Inject
     private TesteObject testeObject;
 
     @Inject
-    private SalvarArquivoLogBD salvarArquivoLog;
+    private SalvarArquivoTesteBD salvarArquivoLog;
 
     @Inject
     private TesteDTO testeDTO;
@@ -77,7 +77,7 @@ public class TesteController {
     @Post("/upload/soap")
     public void uploadArquivoLog(@Valid UploadedFile log) throws Exception {
         validator.onErrorRedirectTo(this).index();
-        arquivoLog.uploadDeLog(log);
+        arquivoTeste.uploadDeLog(log);
         salvarArquivoLog.lerESalvarLog();
         result.redirectTo(this).index();
     }
@@ -85,7 +85,7 @@ public class TesteController {
     //condigo funcionando
     @Path("/logs/json")
     public void jsonLogDataTable(int iDisplayLength, int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch){
-        TabelaLogVO tabelaLog = new TabelaLogVO();
+        TabelaTesteVO tabelaLog = new TabelaTesteVO();
         List<TesteObject> aaData = logDao.listaLogs(iDisplayStart, iDisplayLength, iSortCol_0, sSortDir_0, sSearch);
         tabelaLog.setAaData(aaData);
         tabelaLog.setsEcho(Integer.parseInt(request.getParameter("sEcho")));

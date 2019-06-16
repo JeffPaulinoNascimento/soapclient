@@ -5,7 +5,7 @@ import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import java.io.File;
 import java.io.IOException;
 
-public class ArquivoLog {
+public class ArquivoTeste {
 
     public void uploadDeLog(UploadedFile log) throws IOException {
         if(log != null) {

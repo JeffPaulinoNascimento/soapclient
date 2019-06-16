@@ -4,7 +4,7 @@ import br.com.soap.modelos.TesteObject;
 
 import java.util.List;
 
-public class TabelaLogVO {
+public class TabelaTesteVO {
 
     private int sEcho;
     private String iTotalRecords;

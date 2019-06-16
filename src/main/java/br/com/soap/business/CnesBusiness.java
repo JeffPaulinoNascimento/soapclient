@@ -2,6 +2,7 @@ package br.com.soap.business;
 
 
 import br.com.soap.dto.DadosEstabelecimentoSaudeDTO;
+import br.com.soap.utils.HeaderHandlerResolver;
 import br.gov.saude.servicos.cnes.v1r0.estabelecimentosaudeservice.*;
 import br.gov.saude.servicos.schema.cnes.v1r0.codigocnes.CodigoCNESType;
 import br.gov.saude.servicos.wsdl.mensageria.v1r0.filtropesquisaestabelecimentosaude.FiltroPesquisaEstabelecimentoSaudeType;
@@ -19,8 +20,13 @@ public class CnesBusiness {
 
     public DadosEstabelecimentoSaudeDTO buscarCnes(String cnes) throws EstabelecimentoSaudeFault {
 
-        EstabelecimentoSaudeServicePortType port = new EstabelecimentoSaudeService().getEstabelecimentoSaudeServiceSOAP11Port();
-        System.out.println("teste porta");
+        EstabelecimentoSaudeService service = new EstabelecimentoSaudeService();
+
+        EstabelecimentoSaudeServicePortType port = service.getEstabelecimentoSaudeServiceSOAP11Port();
+
+        HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver();
+
+        service.setHandlerResolver(handlerResolver);
 
         RequestConsultarEstabelecimentoSaude requestConsultarEstabelecimentoSaude = new RequestConsultarEstabelecimentoSaude();
 
@@ -32,16 +38,8 @@ public class CnesBusiness {
 
         requestConsultarEstabelecimentoSaude.setFiltroPesquisaEstabelecimentoSaude(filtroPesquisaEstabelecimentoSaudeType);
 
-        BindingProvider provider = (BindingProvider) port;
-
-        Map<String, Object> requestContext = provider.getRequestContext();
-        Map<String, List<String>> headers = new HashMap<String, List<String>>();
-
-        headers.put("Username", Collections.singletonList("CNES.PUBLICO"));
-        headers.put("Password", Collections.singletonList("cnes#2015public"));
-        requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
-
         ResponseConsultarEstabelecimentoSaude responseConsultarEstabelecimentoSaude = port.consultarEstabelecimentoSaude(requestConsultarEstabelecimentoSaude);
+
         return null;
     }
 
